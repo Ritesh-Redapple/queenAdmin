@@ -110,9 +110,9 @@ export class DashboardAnalyticsComponent implements OnInit {
       ];
     }, 3000);
 
-    this.userService.getAllUsers().subscribe(users => {
+    // this.userService.getAllUsers().subscribe(users => {
 
-    });
+    // });
   }
 
 }
