@@ -1,0 +1,59 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>   
+
+    
+    <h2 
+    class="headline m-0"
+    fxFlex="auto">Manage Room</h2>
+
+    
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field>
+
+      <mat-label>Card Passing</mat-label>
+      <!-- <input cdkFocusInitial formControlName="max_bot" matInput type="number" min="0" max="4" required> -->
+      <mat-select cdkFocusInitial formControlName="card_passing" required>
+        <mat-option *ngFor="let sub of cardPassingArr" [value]="sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error>Please enter card passing value</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Hand Count</mat-label>
+      <!-- <input cdkFocusInitial formControlName="max_bot" matInput type="number" min="0" max="4" required> -->
+      <mat-select cdkFocusInitial formControlName="hand_count" required>
+        <mat-option *ngFor="let sub of handCountArr" [value]="sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error>Please enter hand count value</mat-error>
+    </mat-form-field> 
+
+
+    <mat-form-field>
+
+      <mat-label>Room Price <small>(minimum = 5)</small></mat-label>
+      <input formControlName="minimum_level" matInput type="number" min="5" required>
+      <mat-error>Please enter room price</mat-error>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">ADD ROOM</button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">UPDATE ROOM</button>
+  </mat-dialog-actions>
+</form>
+
+

@@ -1,0 +1,167 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <!-- <img *ngIf="form.get('imageSrc').value" [src]="form.get('imageSrc').value" class="avatar mr-5"> -->
+
+  
+    <h2 
+        class="headline m-0"
+        fxFlex="auto">Agent Manage</h2>
+
+    <!-- <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
+      <mat-icon [icIcon]="icMoreVert"></mat-icon>
+    </button> -->
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field class="mt-6" fxFlex>
+        <mat-label>Name</mat-label>
+        <input cdkFocusInitial formControlName="agent_name" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="mt-6" fxFlex>
+        <mat-label>Email Id</mat-label>
+        <input type="email"  cdkFocusInitial formControlName="agent_email" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="mt-6" fxFlex>
+        <mat-label>Password</mat-label>
+        <input type="password" cdkFocusInitial formControlName="agent_password" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+
+
+    </div>
+
+    <mat-form-field>
+
+      <mat-label>Phone no</mat-label>
+        <input cdkFocusInitial formControlName="agent_phone" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field> 
+
+    <mat-form-field>
+
+      <mat-label>Country</mat-label>
+        <input cdkFocusInitial formControlName="agent_country" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+
+      <mat-label>Percentage Commission</mat-label>
+        <input cdkFocusInitial formControlName="agent_percentage_commission" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+    <!-- <mat-form-field>
+
+      <mat-label>No of Players</mat-label>
+        <input cdkFocusInitial formControlName="agent_no_of_players" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field>
+
+      <mat-label>Players Rake</mat-label>
+        <input cdkFocusInitial formControlName="agent_players_rake" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field>
+
+      <mat-label>Total commission</mat-label>
+        <input cdkFocusInitial formControlName="agent_total_commission" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field>
+
+      <mat-label>Commission Paid out</mat-label>
+        <input cdkFocusInitial formControlName="agent_commission_paid_out" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field>
+
+      <mat-label>Commission Pay Pending</mat-label>
+        <input cdkFocusInitial formControlName="agent_commission_pay_pending" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field> -->
+
+    <!--<mat-form-field>
+
+      <mat-label>Regd date</mat-label>
+        <input cdkFocusInitial formControlName="agent_regd_date" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field>-->
+
+    <!-- <mat-form-field>
+                    <mat-label>Regd date</mat-label>
+                    <input matInput formControlName="agent_regd_date" [matDatepicker]="picker2"  required autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+    </mat-form-field> -->
+
+
+
+
+    <mat-form-field  class="mt-6" fxFlex>
+      <mat-label>Status</mat-label>    
+
+
+      <mat-select formControlName="agent_status" required>
+        <mat-option *ngFor="let sub of usertypeArr" [value]="sub.value ==status ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+      
+    </mat-form-field>
+
+    
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">ADD AGENT</button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">UPDATE AGENT</button>
+  </mat-dialog-actions>
+</form>
+
+<!-- <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
+  <button mat-menu-item>
+    <mat-icon [icIcon]="icPrint"></mat-icon>
+    <span>Print</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon [icIcon]="icDownload"></mat-icon>
+    <span>Export</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon [icIcon]="icDelete"></mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu> -->

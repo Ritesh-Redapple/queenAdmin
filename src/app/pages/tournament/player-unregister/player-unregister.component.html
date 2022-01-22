@@ -1,0 +1,46 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>    
+
+    
+    <h2 class="headline m-0"
+        fxFlex="auto">Register Manage</h2>
+
+    
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field class="mt-6" fxFlex>
+        <mat-label>User Name</mat-label>
+        <input cdkFocusInitial formControlName="user_id" (blur)='changeCalled($event.target.value)' matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="showEmail" class="mt-6" fxFlex>
+
+      <mat-label>userEmail</mat-label>
+      <input cdkFocusInitial value="{{emailValue}}" matInput [readonly]="true">
+      <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+      </div>
+
+    
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">UNREGISTER</button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">UPDATE USER</button>
+  </mat-dialog-actions>
+</form>
+
+

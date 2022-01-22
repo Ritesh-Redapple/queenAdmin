@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reset Password</title>
+</head>
+<style>
+*{margin: 0;padding: 0;box-sizing: border-box;}
+body{background: #081d43;background-size: cover;background-repeat: no-repeat;font-family: sans-serif;}
+.container{max-width: 400px;width: 100%;margin: 0 auto;display: flex;align-items: center;justify-content: center;color: #fff;padding: 14% 15px 9%;text-align: center;}
+.inner_section{width: 100%;float: left;}
+.inner_section h1{font-weight: 300;font-size: 24px;margin: 15px 0 25px;}
+.container img{width: 120px;margin-bottom: 10px;}
+label{display: block;margin:20px 0 15px ;text-align: left;text-transform: uppercase; font-size: 16px;}
+.container input{width: 100%;background: #051734;border: none;padding: 15px;border-radius: 8px;color: #55bdc5;font-size: 16px; margin-bottom: 15px;}
+.container input:focus{outline: none;}
+.submit_btn{width: 100%;background: #2a5194;color: #fff;border-radius: 30px;border: none;padding: 15px;font-size: 18px;margin-top: 25px;cursor: pointer;}
+.copyright{width: 100%;padding: 15px 0; color:#2d6b7d;text-align: center;}
+::-webkit-input-placeholder {color: #2d6b7d;}
+:-ms-input-placeholder {color: #2d6b7d;}
+::placeholder {color: #2d6b7d;}
+</style>
+<body>
+	<div class="container">
+		<div class="inner_section">
+			<img src="App_Icon-01.png" alt="">
+			<h1>Reset Your Password</h1>
+			<form action="">
+				<div>
+					<label for="newPassword">Enter Password</label>
+					<input type="password" id="newPassword" placeholder="Enter Password..">
+				</div>
+				<div>
+					<label for="confirmPassword">Re-Enter Password</label>
+					<input type="password" id="confirmPassword" placeholder="Re-Enter Password..">
+				</div>
+				<div>
+					<button class="submit_btn" type="submit">SUBMIT</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="copyright">&copy; Flop Poker</div>
+</body>
+</html>

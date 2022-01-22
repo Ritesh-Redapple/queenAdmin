@@ -1,0 +1,57 @@
+<div class="w-full h-full bg-pattern" fxLayout="column" fxLayoutAlign="center center">
+  <div @fadeInUp class="card overflow-hidden w-full max-w-xs">
+    <div class="p-6 pb-0" fxLayout="column" fxLayoutAlign="center center">
+      <div class="fill-current text-center">
+        <img class="w-16" src="assets/img/sample.png" width="100%" alt="Tweetup">
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <h2 class="title m-0">Welcome back</h2>
+      <h4 class="body-2 text-secondary m-0">Sign in with your credentials below.</h4>
+    </div>
+    <mat-horizontal-stepper [linear]="isLinear" #stepper>
+      <mat-step [stepControl]="loginForm" >
+        <form [formGroup]="loginForm" class="p-6" fxLayout="column" fxLayoutGap="16px">
+          <div fxFlex="auto" fxLayout="column">
+            <mat-form-field fxFlex="grow">
+              <mat-label>E-Mail</mat-label>
+              <input formControlName="email" matInput required>
+              <mat-error *ngIf="loginForm.get('email').hasError('required')">We need an email address to log you in</mat-error>
+            </mat-form-field>
+            <mat-form-field fxFlex="grow">
+              <mat-label>Password</mat-label>
+              <input [type]="inputType" formControlName="password" matInput required>
+              <button (click)="toggleVisibility()" mat-icon-button matSuffix matTooltip="Toggle Visibility" type="button">
+                <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+                <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+              </button>
+              <mat-hint>Click the eye to toggle visibility</mat-hint>
+              <mat-error *ngIf="loginForm.get('password').hasError('required')">We need a password to log you in</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="button">
+            <button color="primary" mat-raised-button type="button" (click)="loginFunc()">Login</button>
+          </div>
+        </form>
+      </mat-step>
+      <!-- <mat-step [stepControl]="OTPCheckFormGroup" >
+        <form [formGroup]="OTPCheckFormGroup" class="p-6" fxLayout="column" fxLayoutGap="16px">
+          <div class="text-center">
+            <h4 class="profile_txt">A verification code has been sent to your email.</h4>
+          </div>
+          <mat-form-field>
+            <input matInput type="text" placeholder="Provide the OTP here" formControlName="otp" required maxlength="6" (input)="maxLengthCheck(this.OTPCheckFormGroup.controls.otp)">
+            <mat-error *ngIf="OTPCheckFormGroup.get('otp').hasError('required')">We need a valid OTP to log you in</mat-error>
+          </mat-form-field>
+          <div class="col-xs-12 text-center">
+            <button color="primary" mat-raised-button (click)="send()">Submit</button>
+          </div>
+          <div class="col-xs-12 text-center" style="margin-top: 10px;">
+            <p>Didn't Receive Code ? <span (click)="SendOTP()" style="cursor: pointer;color: #337ab7;text-decoration: none;background-color: transparent;border: none;">Resend</span></p>
+          </div>
+        </form>
+      </mat-step> -->
+    </mat-horizontal-stepper>
+  </div>
+</div>

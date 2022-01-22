@@ -1,0 +1,467 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <!-- <img *ngIf="form.get('imageSrc').value" [src]="form.get('imageSrc').value" class="avatar mr-5"> -->
+
+   
+
+    <!-- <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
+      <mat-icon [icIcon]="icMoreVert"></mat-icon>
+    </button> -->
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field class="mt-6" fxFlex>
+        <mat-label>Name</mat-label>
+        <input cdkFocusInitial formControlName="tournament_name" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+      <mat-form-field class="mt-6" fxFlex>
+        <mat-label>Description</mat-label>
+        <input cdkFocusInitial formControlName="tournament_description" matInput required>
+
+        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
+      </mat-form-field>
+
+     <!--<img src="assets/img/dummy_profile.png" alt="Tournament Image" >-->
+      <div class="form-group">
+    <label for="file">Choose File</label>
+    <span >
+                      <img src="{{url}}"  alt="" width="100%">
+                    </span>
+    <!--<div>
+      <img src="{{url}}" *ngIf="url"></div>--->
+    
+
+    <input name="tournament_image" type="file"
+           id="file"
+           (change)="handleFileInput($event.target.files)" accept="image/x-png,image/gif,image/jpeg" required="true" >
+
+           <span class="file-name" *ngIf="getErrorMessageForFileShow">
+            
+                
+                <mat-error>{{getErrorMessageForFileFormat}}</mat-error>
+            
+             </span>
+
+
+</div>
+
+     
+
+      <!--<mat-form-field class="mt-6" fxFlex>
+    <mat-label *ngIf="selectedFiles; else newFile">{{selectedFiles.item(0).name}}</mat-label>
+    <ng-template #newFile>
+        <mat-label>Choose file</mat-label>
+    </ng-template>
+    <input matInput disabled>
+    <button mat-icon-button matSuffix (click)="fileInput.click()">
+        <mat-icon [icIcon]="icPrint" class="mr-3" matPrefix></mat-icon>
+    </button>
+    <input  (change)="selectFile($event)" #fileInput type="file" id="file" formControlName="tournament_image" required>
+</mat-form-field>-->
+
+                                  
+
+
+      
+
+      <mat-form-field class="mt-6" fxFlex>
+        <mat-label>Game Type</mat-label>
+
+        <mat-select formControlName="game_type" required>
+        <mat-option *ngFor="let sub of tournamentGameTypeArr" [value]="sub.value ==game_type ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+
+        <!--<input cdkFocusInitial formControlName="game_type" matInput required>-->        
+      </mat-form-field>
+    </div>
+
+    <!--<mat-form-field *ngIf="starttimeVisible">
+      <mat-label>Start time</mat-label>
+      <input  formControlName="tournament_start_time"  matInput required>      
+    </mat-form-field>
+
+    <mat-form-field *ngIf="!starttimeVisible">
+      <mat-label>Start time</mat-label>
+      <input type="datetime-local" formControlName="tournament_start_time" [ngModel]="tournament_start_time | date:'yyyy-MM-ddTHH:mm'"  matInput required>      
+    </mat-form-field>-->
+    <mat-form-field *ngIf="scheduleShow">
+
+      <mat-label>Schedule</mat-label>
+      <mat-select formControlName="tournament_schedule_days" required (selectionChange)="changeWebsite($event)" >
+        <mat-option *ngFor="let sub of tournamentScheduleAnotherArr"[value]="sub.value ==tournament_schedule_days ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+     
+      
+</mat-form-field>
+
+<mat-form-field *ngIf="checkboxShow">
+
+      <mat-label>Days</mat-label>
+      
+     
+      <mat-select formControlName="tournament_days"  multiple="true" [(ngModel)]="selectItemsSchedule" required>
+        <mat-option *ngFor="let sub of tournamentScheduleArr" [value]="sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+</mat-form-field>
+
+<!--<mat-form-field>
+                    <mat-label>Start Date</mat-label>
+                    <input matInput formControlName="tournament_start_date" [matDatepicker]="picker8" placeholder="Tournament Start Date" required autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="picker8"></mat-datepicker-toggle>
+                    <mat-datepicker #picker8 disabled="false"></mat-datepicker>
+                  </mat-form-field>-->
+
+        <mat-form-field>
+                    <mat-label>Start Date</mat-label>
+                    <input matInput formControlName="tournament_start_date" [matDatepicker]="picker33"  required autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="picker33"></mat-datepicker-toggle>
+                    <mat-datepicker #picker33 disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                               
+                 <mat-form-field>
+
+                  <mat-label>Start Time</mat-label>
+                  <input matInput formControlName="tournament_start_time" placeholder="Tournament Start Time"  [ngxTimepicker]="picker" required>
+<ngx-material-timepicker #picker></ngx-material-timepicker>
+</mat-form-field>
+
+ <mat-form-field>
+      <mat-label>Late Entry</mat-label>
+      
+     <mat-select formControlName="tournament_late_entry" required>
+        <mat-option *ngFor="let sub of tournamentLateArr" [value]="sub.value ==tournament_late_entry ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+
+           
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Late Entry Time</mat-label>
+      <input type="time" formControlName="tournament_late_entry_expiry_time" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+                    <mat-label>Registration Open Date</mat-label>
+                    <input matInput formControlName="tournament_registration_open_date" [matDatepicker]="picker3"  required autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3 disabled="false"></mat-datepicker>
+                  </mat-form-field>
+
+
+                  <mat-form-field>
+
+                    <mat-label>Registration Open Time</mat-label>
+                  <input matInput formControlName="tournament_registration_open_time"   [ngxTimepicker]="picker5" required>
+<ngx-material-timepicker #picker5></ngx-material-timepicker>
+</mat-form-field>
+
+<mat-form-field>
+      <mat-label>Prize Pool Amount</mat-label>
+      <input type="number" formControlName="tournament_prize_pool_amount" matInput required>      
+    </mat-form-field>
+
+
+
+    <mat-form-field>
+      <mat-label>Buyin Amount</mat-label>
+      <input type="number" formControlName="tournament_buy_in_amount" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Entry Fee</mat-label>
+      <input type="number" formControlName="tournament_entry_fee" matInput>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Starting Chips</mat-label>
+      <input type="number" formControlName="tournament_starting_chips" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Minimum Players</mat-label>
+      <input type="number" formControlName="tournament_minimum_player_registered" matInput required>      
+    </mat-form-field>
+
+    
+
+    
+    
+
+    
+
+    <mat-form-field>
+      <mat-label>Maximum Players</mat-label>
+      <input type="number" formControlName="tournament_maximum_player_allowed" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Table Seats</mat-label>
+      <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+    type = "number"  maxlength="1" formControlName="tournament_seats" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Small Blind</mat-label>
+      <input type="number" formControlName="tournament_small_blind" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Big Blind</mat-label>
+      <input type="number" formControlName="tournament_big_blind" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Antes</mat-label>
+      <input type="number" formControlName="tournament_antes" matInput>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Levels</mat-label>
+      <input type="number" formControlName="tournament_levels" matInput required>      
+    </mat-form-field>
+
+
+
+
+
+    <mat-form-field>
+      <mat-label>Rebuy</mat-label>
+      <mat-select formControlName="tournament_rebuy" required>
+        <mat-option *ngFor="let sub of tournamentRebuyArr" [value]="sub.value ==tournament_rebuy ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+
+           
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rebuys Maximum Count</mat-label>
+      <input formControlName="tournament_rebuys_maximum_count" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rebuys Expiry Level</mat-label>
+      <input type="number" formControlName="tournament_rebuys_expiry_level" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rebuy Amount</mat-label>
+      <input type="number" formControlName="tournament_rebuy_amount" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rebuy Chips Amount</mat-label>
+      <input type="number" formControlName="tournament_rebuy_chips_amount" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Add On</mat-label>
+      <mat-select formControlName="tournament_add_on" required>
+        <mat-option *ngFor="let sub of tournamentAddOnArr" [value]="sub.value ==tournament_add_on ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+           
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Add On Available Level</mat-label>
+      <input type="number" formControlName="tournament_add_on_available_level" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Add On Expiry Level</mat-label>
+      <input type="number" formControlName="tournament_add_on_expiry_level" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Add On Amount</mat-label>
+      <input type="number" formControlName="tournament_add_on_amount" matInput required>      
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Add On Chips Amount</mat-label>
+      <input type="number" formControlName="tournament_add_on_chips_amount" matInput required>      
+    </mat-form-field>
+
+    <!--<mat-form-field>
+      <mat-label>Tournament Start Time</mat-label>
+      <input type="datetime-local" formControlName="tournament_start_time" matInput required>      
+    </mat-form-field>-->
+
+    <!--<mat-form-field>
+      <mat-label>Tournament Schedule</mat-label>
+      <input  type="datetime-local" formControlName="tournament_schedule" matInput required>      
+    </mat-form-field>-->
+
+    <!--<mat-form-field>
+      <mat-label>Tournament Registration Open Datetime</mat-label>
+      <input  type="datetime-local" formControlName="tournament_registration_open_datetime" matInput required>      
+    </mat-form-field>-->
+
+   
+
+    
+
+    <mat-form-field>
+      <mat-label>Payout Structure</mat-label>
+
+      <mat-select formControlName="tournament_structure" required>
+        <mat-option *ngFor="let sub of tournamentStructureArr" [value]="sub.value ==tournament_structure ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+
+           
+    </mat-form-field>
+
+    
+
+    <mat-form-field>
+      <mat-label>Bot Assistance</mat-label>
+      
+       <mat-select formControlName="tournament_bot_assistance" required >
+        <mat-option *ngFor="let sub of tournamentBotArr" [value]="sub.value ==tournament_bot_assistance ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+
+            
+    </mat-form-field>
+
+    
+
+    <mat-form-field>
+
+      <mat-label>Status</mat-label>
+
+      <mat-select formControlName="tournament_status" required>
+        <mat-option *ngFor="let sub of tournamentStatusArr" [value]="sub.value ==tournament_status ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+
+            
+    </mat-form-field>
+
+    
+
+    
+
+
+
+
+
+<!--<mat-form-field>
+                    <mat-label>Tournament Schedule Date</mat-label>
+                    <input matInput formControlName="tournament_schedule_date" [matDatepicker]="picker4"  required autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4 disabled="false"></mat-datepicker>
+                  </mat-form-field>
+
+
+                  <mat-form-field>
+
+                    <mat-label>Tournament Schedule Time</mat-label>
+                  <input matInput formControlName="tournament_schedule_time"   [ngxTimepicker]="picker7" required>
+<ngx-material-timepicker #picker7></ngx-material-timepicker>
+</mat-form-field>-->
+<!--<mat-form-field *ngIf="scheduleShow">
+
+      <mat-label>Schedule</mat-label>
+      <mat-select formControlName="tournament_schedule_days" required (selectionChange)="changeWebsite($event)" >
+        <mat-option *ngFor="let sub of tournamentScheduleAnotherArr"[value]="sub.value ==tournament_schedule_days ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+     
+      
+</mat-form-field>-->
+
+<!---<mat-form-field *ngIf="scheduleShow">
+
+      <mat-label>Schedule</mat-label>
+      <mat-select formControlName="tournament_schedule_days" required>
+        <mat-option *ngFor="let sub of tournamentScheduleAnotherArr" [value]="sub.value ==tournament_schedule_days ? selected : sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+
+     
+     
+      
+</mat-form-field>-->
+
+<!--<mat-form-field *ngIf="checkboxShow">
+
+      <mat-label>Days</mat-label>
+      
+     
+      <mat-select formControlName="tournament_days"  multiple="true" [(ngModel)]="selectItemsSchedule" required>
+        <mat-option *ngFor="let sub of tournamentScheduleArr" [value]="sub.value">
+          {{sub.name}}
+        </mat-option>
+      </mat-select>
+</mat-form-field>-->
+
+
+
+   <!--<mat-form-field>
+                    <mat-label>Tournament Start Time</mat-label>
+                    <input placeholder="Tournament Start Time"  [ngxTimepicker]="picker">
+<ngx-material-timepicker #picker></ngx-material-timepicker>
+                  </mat-form-field>-->               
+
+       <!--<input [ngxTimepicker]="picker">
+<ngx-material-timepicker #picker></ngx-material-timepicker>-->
+     <!--<mat-form-field>
+      <input matInput [ngxMatDatetimePicker]="picker" 
+      placeholder="Choose a date" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+    </mat-form-field>-->
+ <!--<input value="{{selectedTime}}" (click)="open($event)"/>-->
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">CANCEL</button>
+    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">CREATE TOURNAMENT</button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">UPDATE TOURNAMENT</button>
+  </mat-dialog-actions>
+</form>
+
+<!-- <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
+  <button mat-menu-item>
+    <mat-icon [icIcon]="icPrint"></mat-icon>
+    <span>Print</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon [icIcon]="icDownload"></mat-icon>
+    <span>Export</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon [icIcon]="icDelete"></mat-icon>
+    <span>Delete</span>
+  </button>
+</mat-menu> -->
