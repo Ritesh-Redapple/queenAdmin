@@ -14,6 +14,8 @@ import icPerson from '@iconify/icons-ic/twotone-person';
 import icMyLocation from '@iconify/icons-ic/twotone-my-location';
 import icLocationCity from '@iconify/icons-ic/twotone-location-city';
 import icEditLocation from '@iconify/icons-ic/twotone-edit-location';
+import { MatInputModule } from '@angular/material/input';
+
 
 import { UserService } from '../../services/user.service';
 import {MatSelectChange} from "@angular/material/select";
@@ -40,181 +42,82 @@ export interface Coin {
   styleUrls: ['./kyc-status-update.component.scss']
 })
 export class KycStatusUpdateComponent implements OnInit {
-  user_name:any;
-  phone_code:any;
-  selected=false;
-  coins:any;
 
-  usertypeArr: any[] = [
-    { name: 'Deposit' },
-    { name: 'Withdrawl' }
-    
-    
-];
+  statusArr: any[] = [
+    { name: 'accept', title: 'Accept' },
+    { name: 'reject', title: 'Reject' }    
+  ];
 
-  
-
- 
   subject$: ReplaySubject<Player[]> = new ReplaySubject<Player[]>(1);
   data$: Observable<Player[]> = this.subject$.asObservable();
-  rolelists= [];
-  Coin=[];
-  coinList=[];
-  form: FormGroup;
-  mode: 'create' | 'update' = 'create';
-  dataSource: MatTableDataSource<Player> | null;
-  icMoreVert = icMoreVert;
-  icClose = icClose;
 
-  icPrint = icPrint;
-  icDownload = icDownload;
-  icDelete = icDelete;
-
-  icPerson = icPerson;
-  icMyLocation = icMyLocation;
-  icLocationCity = icLocationCity;
-  icEditLocation = icEditLocation;
-  icPhone = icPhone;
-  aadharStatus
-  panStatus
-  bankStatus
-  constructor(@Inject(MAT_DIALOG_DATA) public defaults: any,
-              private dialogRef: MatDialogRef<KycStatusUpdateComponent>,
-              private fb: FormBuilder,
-              private userService:UserService,
-              private router: Router,
-              private location: Location,
-              private coinService:CoinService,
-              private snackbar: MatSnackBar
-
-              ) {
+  account_holder_name: any;
+  bank_name: any;
+  status: any;
+  ifsc: any;
+  DOB: any;
+  fileUrl: any;
+  kyc_mode: any;
+  pan_number: any;
+  pan_name: any;
+  pan_status: any;
+  pan_DOB: any;
+  pan_fileUrl: any;
+  aadhar_DOB: any;
+  aadhar_name: any;
+  aadhar_status: any;
+  aadhar_number: any;
+  account_number: any;
+  aadhar_fileUrl: any;
+  bankDetails: boolean = false;
+  panDetails: boolean = false;
+  aadharDetails: boolean = false;
+  
+  constructor(@Inject(MAT_DIALOG_DATA) public defaults: any) {
   }
 
   ngOnInit() {
-
-   
+    console.log('this.defaults ===>>', this.defaults);
     
-   ////////////////////////////////
-
-    ////////////////////////////
-    if (this.defaults) {
-      console.log(this.defaults);
-      //this.mode = 'update';
-      this.mode = 'create';
-
-    } else {
-      this.defaults = {} as Player;
-      this.aadharStatus= (this.defaults.phone_code) ? this.defaults.phone_code : '';
-      this.panStatus = (this.defaults.user_name) ? this.defaults.user_name : '';
-      this.bankStatus = (this.defaults.user_email) ? this.defaults.user_email : '';
-    }
-
-    this.form = this.fb.group({
-      coins1: this.defaults.coins1,
-      reason: this.defaults.reason,
-      user_email1: this.defaults.user_email1,
-      user_name1:this.defaults.user_name1,
-      type1:this.defaults.type1,
-      country_id: this.defaults.country_id,
-      //imageSrc: this.defaults.imageSrc,
-      user_name: [this.defaults.phone_code || ''],
-      phone_code: [this.defaults.phone_code || ''],
-      country_code: [this.defaults.country_code || ''],
-      country_name: this.defaults.country_name || '',
-      //rolename:[this.defaults.roleName || ''],
+ console.log('Account nUmber ====>>', this.defaults.bank_details.account_number)
+    if(this.defaults.bank_details.account_number){
      
-      //roleid:[this.defaults.roleId || ''],
-      //coins:[this.defaults.coins || [Validators.required]],
-      //coins:[this.defaults.coins || ''],
-      //username:[this.defaults.userName || ''],
-      //useremail:[this.defaults.email || ''],
-      _id:[this.defaults._id || ''],
-      user_id:[this.defaults.user_id || '']
-    });
-  }
-
-  save() {
-    if (this.mode === 'create') {
-      this.createPlayer();
-    } else if (this.mode === 'update') {
-      this.updatePlayer();
+      this.account_number = this.defaults.bank_details.account_number;
+      this.account_holder_name = this.defaults.bank_details.account_holder_name;
+      this.bank_name = this.defaults.bank_details.bank_name;
+      this.ifsc = this.defaults.bank_details.ifsc;
+      this.status = this.defaults.bank_details.status;
+      this.bankDetails = true;
+    }else{
+      this.bankDetails = false;
     }
-  }
-
-  createPlayer() {
-    const coins = this.form.value;
     
-    console.log("coins value"+(coins.length));
-    console.log("coins value string"+JSON.stringify(coins))
-    if(coins.coins1=='' || coins.coins1== null
-    
-    
-    ){
-      console.log("not");
-         this.snackbar.open("All fields are required",'OK',{
-                          verticalPosition: 'top',
-                          horizontalPosition:'right'
-                        });
+    if(this.defaults.pan_details.number){
+      this.pan_DOB=this.defaults.pan_details.DOB;
+      this.pan_fileUrl=this.defaults.pan_details.fileUrl;
+      this.pan_fileUrl= "https://source.unsplash.com/user/c_v_r/100x100";
+      this.pan_number=this.defaults.pan_details.number;
+      this.pan_name=this.defaults.pan_details.name;
+      this.pan_status = this.defaults.pan_details.pan_status;
+      this.panDetails = true;
+    }else{
+      this.panDetails = false;
     }
-    else {
-    coins.coins=coins.coins1;
-    
-    this.coinService.withdrawCoin(coins).subscribe(User => {
 
-
-    if(User['status']==1){
-          console.log("ok");
-        
-        location.reload();
-        this.dialogRef.close(coins);
-      }
-
-      else{
-         console.log("not");
-         this.snackbar.open(User['message'],'OK',{
-                          verticalPosition: 'top',
-                          horizontalPosition:'right'
-                        });
-      }
-      
-    });
-
+    if(this.defaults.aadhar_details.number){
+      this.aadhar_DOB= this.defaults.aadhar_details.DOB;
+      this.aadhar_fileUrl= this.defaults.aadhar_details.fileUrl;
+      this.aadhar_fileUrl= "https://source.unsplash.com/user/c_v_r/100x100";
+      this.aadhar_name= this.defaults.aadhar_details.name;
+      this.aadhar_number= this.defaults.aadhar_details.number;
+      this.aadhar_status= this.defaults.aadhar_details.status;
+      this.aadharDetails = true;
+    }else{
+      this.aadharDetails = false;
     }
+
   }
 
-  updatePlayer() {
-    const editplayer = this.form.value;
-
-    editplayer.country_id = this.defaults.country_id;
-
-    console.log("editplayer"+JSON.stringify(editplayer))
-    /*this.coinService.editCountry(editplayer).subscribe(User => {
-      //console.log(User);
-      if(User){
-        //this.router.navigate(['/user']);
-        //this.ngOnInit();
-        location.reload();
-        this.dialogRef.close(editplayer);
-      }
-    });*/
-  }
-
-  isCreateMode() {
-    return this.mode === 'create';
-  }
-
-  isUpdateMode() {
-    return this.mode === 'update';
-  }
-  changeValue(value) {
-    console.log(value);
-    //console.log(this.peopleForm.get("roleid").value);
-    //console.log()
-    //const index = this.rolelists.findIndex(c => c === row);
-    //console.log(index);
-    //console.log(this.rolelists);
-    this.defaults.roleName = value;
-    //this.subject$.next(this.rolelists);
-  }
+ 
 
 }
