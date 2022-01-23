@@ -1,106 +1,46 @@
-<form (ngSubmit)="save()" [formGroup]="form">
+
   <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
-    <!-- <img *ngIf="form.get('imageSrc').value" [src]="form.get('imageSrc').value" class="avatar mr-5"> -->
-
-    
-    <h2 class="headline m-0"
-        fxFlex="auto">KYC Details</h2>
-
-    <!-- <button [matMenuTriggerFor]="settingsMenu" class="text-secondary" mat-icon-button type="button">
-      <mat-icon [icIcon]="icMoreVert"></mat-icon>
-    </button> -->
+  <h2 class="headline m-0"
+  fxFlex="auto">KYC DETAILS</h2>
 
     <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
       <mat-icon [icIcon]="icClose"></mat-icon>
     </button>
-  </div>
-
-  <mat-divider class="-mx-6 text-border"></mat-divider>
-
-  <mat-dialog-content fxLayout="column">
-    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
-
-        
-          <div>
-            <mat-label>Aadhar Details</mat-label>
-          </div>
-          <div layout = "row" layout-xs = "column">
-            <mat-form-field class="mt-6" fxFlex>
-              <mat-label>Status</mat-label>
-              <mat-select formControlName="gender" required>
-                <mat-option *ngFor="let sub of gendertypeArr" [value]="sub.value">
-                  {{sub.name}}
-                </mat-option>
-              </mat-select>
-      
-              <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
-            </mat-form-field>
-         </div>
-
-
-      
-
     </div>
 
-    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
-      <mat-form-field class="mt-6" fxFlex>
-        <mat-label>PAN Details </mat-label>
-        <div>
-          PAN Card No :
-        </div>
-        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
-      </mat-form-field>
+    <mat-divider class="-mx-6 text-border"></mat-divider>
 
-      <mat-form-field class="mt-6" fxFlex>
-        <mat-label>Status</mat-label>
-        <input cdkFocusInitial formControlName="panSatatus" matInput required>
+    <mat-dialog-content fxLayout="column">
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px" *ngIf="aadharDetails">
+        <h3>Aadhar Details </h3>
+        <p>Name : {{aadhar_name}}</p>
+        <p>DOB : {{aadhar_DOB}}</p>
+        <p>Aadhar Number : {{aadhar_number}}</p>  
+        <p>KYC Status : {{aadhar_status}}</p>
+        <img mat-card-avatar src="{{aadhar_fileUrl}}">
+      </div>
 
-        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
-      </mat-form-field>
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px" *ngIf="panDetails">
+        <h3>PAN Details </h3>
+        <p>Name : {{pan_name}}</p>
+        <p>DOB : {{pan_DOB}}</p>
+        <p>PAN Number : {{aadhar_number}}</p>  
+        <p>KYC Status : {{aadhar_status}}</p>
+        <img mat-card-avatar src="{{pan_fileUrl}}">
+      </div>
 
-    </div>
-
-    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
-      <mat-form-field class="mt-6" fxFlex>
-        <mat-label>Bank Details</mat-label>
-        <div>
-          Bank A/C No :
-        </div>
-
-        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
-      </mat-form-field>
-
-      <mat-form-field class="mt-6" fxFlex>
-        <mat-label>Status</mat-label>
-        <input cdkFocusInitial formControlName="bankStatus" matInput required>
-
-        <mat-icon [icIcon]="icPerson" class="mr-3" matPrefix></mat-icon>
-      </mat-form-field>
-
-    </div>
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px" *ngIf="bankDetails">
+          <h3>Bank Details</h3>
+          
+          <p>Account No : {{account_number}}</p>
+          <p>Bank Name : {{bank_name}}</p>
+          <p>IFSC Code : {{ifsc}}</p>
+          <p>KYC Status : {{status}}</p>
+      </div>
 
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="button">CANCEL</button>
-    <button *ngIf="isCreateMode()" color="primary" mat-button type="submit">WITHDRAW COIN</button>
-    <button *ngIf="isUpdateMode()" color="primary" mat-button type="submit">UPDATE USER</button>
+
+    <button mat-button mat-dialog-close color="primary" type="submit">CLOSE</button>
   </mat-dialog-actions>
-</form>
-
-<!-- <mat-menu #settingsMenu="matMenu" xPosition="before" yPosition="below">
-  <button mat-menu-item>
-    <mat-icon [icIcon]="icPrint"></mat-icon>
-    <span>Print</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon [icIcon]="icDownload"></mat-icon>
-    <span>Export</span>
-  </button>
-
-  <button mat-menu-item>
-    <mat-icon [icIcon]="icDelete"></mat-icon>
-    <span>Delete</span>
-  </button>
-</mat-menu> -->
